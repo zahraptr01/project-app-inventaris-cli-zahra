@@ -42,6 +42,17 @@ func main() {
 		handler.DeleteItemCLI()
 	case "detail-item":
 		handler.DetailItemCLI()
+	case "check-replacement":
+		handler.CheckReplacementCLI()
+	case "search-item":
+		handler.SearchItemCLI()
+
+	// Fitur Laporan
+	case "report-investment":
+		handler.ReportTotalInvestmentCLI()
+	case "report-by-id":
+		handler.ReportItemByIDCLI()
+
 	case "":
 		showHelp()
 	default:
