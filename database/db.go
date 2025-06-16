@@ -11,7 +11,6 @@ import (
 var DB *sql.DB
 
 func InitDB() error {
-	// Silakan ubah parameter sesuai konfigurasi lokal PostgreSQL-mu
 	host := getEnv("DB_HOST", "localhost")
 	port := getEnv("DB_PORT", "5432")
 	user := getEnv("DB_USER", "postgres")
@@ -35,7 +34,6 @@ func InitDB() error {
 	return nil
 }
 
-// Helper untuk membaca environment variable
 func getEnv(key, defaultVal string) string {
 	val := os.Getenv(key)
 	if val == "" {

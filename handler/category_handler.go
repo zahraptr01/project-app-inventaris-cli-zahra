@@ -10,6 +10,7 @@ import (
 	"text/tabwriter"
 )
 
+// Display a list of categories such as ID, name and description.
 func ListCategoryCLI() {
 	categories, err := services.ListCategories()
 	if err != nil {
@@ -25,6 +26,7 @@ func ListCategoryCLI() {
 	writer.Flush()
 }
 
+// Add a new category.
 func AddCategoryCLI() {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -42,6 +44,7 @@ func AddCategoryCLI() {
 	}
 }
 
+// View category details by ID.
 func DetailCategoryCLI() {
 	var input string
 	fmt.Print("Masukkan ID kategori: ")
@@ -63,6 +66,7 @@ func DetailCategoryCLI() {
 	}
 }
 
+// Edit a category.
 func EditCategoryCLI() {
 	var input string
 	fmt.Print("Masukkan ID kategori: ")
@@ -89,6 +93,7 @@ func EditCategoryCLI() {
 	}
 }
 
+// Delete a category.
 func DeleteCategoryCLI() {
 	var input string
 	fmt.Print("Masukkan ID kategori yang ingin dihapus: ")

@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// Display a list of all inventory items (in days)
 func ListItemCLI() {
 	items, err := services.ListItems()
 	if err != nil {
@@ -23,11 +24,12 @@ func ListItemCLI() {
 	for _, i := range items {
 		days := int(time.Since(i.PurchaseDate).Hours() / 24)
 		fmt.Fprintf(writer, "%d\t%s\t%d\t%.2f\t%s\t%d\n",
-			i.ID, i.Name, i.CategoryID, i.Price, i.PurchaseDate.Format("2006-01-02"), days)
+			i.ID, i.Name, i.CategoryID, i.Price, i.PurchaseDate.Format("2023-01-01"), days)
 	}
 	writer.Flush()
 }
 
+// Add new items and categories
 func AddItemCLI() {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -58,6 +60,7 @@ func AddItemCLI() {
 	}
 }
 
+// View item details by ID.
 func DetailItemCLI() {
 	var input string
 	fmt.Print("Masukkan ID barang: ")
@@ -80,6 +83,7 @@ func DetailItemCLI() {
 	}
 }
 
+// Edit item data.
 func EditItemCLI() {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -114,6 +118,7 @@ func EditItemCLI() {
 	}
 }
 
+// Deleting items.
 func DeleteItemCLI() {
 	var input string
 	fmt.Print("Masukkan ID barang: ")
@@ -129,4 +134,29 @@ func DeleteItemCLI() {
 	} else {
 		fmt.Println("Barang berhasil dihapus.")
 	}
+}
+
+// search feature for items based on keywords such as item name.
+func SearchItemCLI() {
+	var keyword string
+	fmt.Print("Masukkan kata kunci nama barang: ")
+	fmt.Scanln(&keyword)
+
+	items, err := services.SearchItemsByName(keyword)
+	if err != nil {
+		fmt.Println("Gagal mencari barang:", err)
+		return
+	}
+
+	if len(items) == 0 {
+		fmt.Println("Barang tidak ditemukan.")
+		return
+	}
+
+	writer := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+	fmt.Fprintln(writer, "ID\tNama\tHarga\tTgl Beli\tKategori")
+	for _, item := range items {
+		fmt.Fprintf(writer, "%d\t%s\t%.2f\t%s\t%s\n", item.ID, item.Name, item.Price, item.PurchaseDate.Format("2006-01-02"), item.Category.Name)
+	}
+	writer.Flush()
 }

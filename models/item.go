@@ -9,4 +9,5 @@ type Item struct {
 	PurchaseDate time.Time
 	UsageDays    int
 	CategoryID   int
+	Category     Category
 }

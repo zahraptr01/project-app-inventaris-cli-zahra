@@ -7,6 +7,7 @@ import (
 	"project-app-inventaris-cli-zahra/models"
 )
 
+// view all category data
 func GetAllCategories() ([]models.Category, error) {
 	query := `SELECT id, name, description FROM categories ORDER BY id`
 	rows, err := database.DB.Query(query)
@@ -26,12 +27,14 @@ func GetAllCategories() ([]models.Category, error) {
 	return categories, nil
 }
 
+// create new category
 func CreateCategory(category models.Category) error {
 	query := `INSERT INTO categories (name, description) VALUES ($1, $2)`
 	_, err := database.DB.Exec(query, category.Name, category.Description)
 	return err
 }
 
+// view category data by id
 func GetCategoryByID(id int) (models.Category, error) {
 	query := `SELECT id, name, description FROM categories WHERE id = $1`
 	row := database.DB.QueryRow(query, id)
@@ -47,6 +50,7 @@ func GetCategoryByID(id int) (models.Category, error) {
 	return c, nil
 }
 
+// update category
 func UpdateCategory(id int, category models.Category) error {
 	query := `UPDATE categories SET name = $1, description = $2 WHERE id = $3`
 	result, err := database.DB.Exec(query, category.Name, category.Description, id)
@@ -60,6 +64,7 @@ func UpdateCategory(id int, category models.Category) error {
 	return nil
 }
 
+// delete category
 func DeleteCategory(id int) error {
 	query := `DELETE FROM categories WHERE id = $1`
 	result, err := database.DB.Exec(query, id)
