@@ -8,25 +8,25 @@ import (
 )
 
 func TestAddAndGetCategory(t *testing.T) {
-	// Inisialisasi koneksi DB
+	// Initialise DB connection
 	err := database.InitDB()
 	if err != nil {
 		t.Fatalf("Gagal koneksi ke database: %v", err)
 	}
 
-	// Data kategori uji
+	// Test category data
 	testCategory := models.Category{
 		Name:        "Test Kategori",
 		Description: "Kategori untuk pengujian",
 	}
 
-	// Tambah kategori
+	// Add category
 	err = repository.CreateCategory(testCategory)
 	if err != nil {
 		t.Fatalf("Gagal tambah kategori: %v", err)
 	}
 
-	// Hapus kategori setelah test
+	// Remove category after test
 	defer func() {
 		err := repository.DeleteCategoryByName("Test Kategori")
 		if err != nil {
@@ -34,13 +34,13 @@ func TestAddAndGetCategory(t *testing.T) {
 		}
 	}()
 
-	// Ambil semua kategori
+	// Retrieve all categories
 	categories, err := repository.GetAllCategories()
 	if err != nil {
 		t.Fatalf("Gagal ambil kategori: %v", err)
 	}
 
-	// Verifikasi kategori ditemukan
+	// Verify category found
 	found := false
 	for _, cat := range categories {
 		if cat.Name == "Test Kategori" {
