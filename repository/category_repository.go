@@ -77,3 +77,10 @@ func DeleteCategory(id int) error {
 	}
 	return nil
 }
+
+// delete category by name (for testing)
+func DeleteCategoryByName(name string) error {
+	query := `DELETE FROM categories WHERE name = $1`
+	_, err := database.DB.Exec(query, name)
+	return err
+}

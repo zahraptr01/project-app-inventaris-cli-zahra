@@ -115,3 +115,10 @@ func SearchItemsByName(keyword string) ([]models.Item, error) {
 
 	return items, nil
 }
+
+// delete item by name (for testing)
+func DeleteItemByName(name string) error {
+	query := `DELETE FROM items WHERE name = $1`
+	_, err := database.DB.Exec(query, name)
+	return err
+}
